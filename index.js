@@ -5,11 +5,11 @@ const discogs = require('disconnect').Client;
 
 const PORT = process.env.PORT || 5001
 
-const records = discogs().setConfig({ outputFormat: 'html' });
-const db = records.user().collection();
-const userdata = db.getReleases('b1furc4t0r', 0, { page: 0, per_page: 100 }, function (err, data) {
-  return data;
-});
+// const records = discogs().setConfig({ outputFormat: 'html' });
+// const db = records.user().collection();
+// db.getReleases('b1furc4t0r', 0, { page: 0, per_page: 100 }, function (err, data) {
+//   console.log(data);
+// });
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -17,5 +17,8 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/cool', (req, res) => res.send(cool()))
-  .get('/music', (req, res) => res.send(userdata.releases[0].basic_information.artists[0]))
+  .get('/music', (req, res) => {
+    var col = new discogs().user().collection();
+    col.releases('b1furc4t0r', 0, { page: 2, per_page: 75 }, function (err, data) { res.send(data); })
+  })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
