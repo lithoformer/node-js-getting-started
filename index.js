@@ -44,6 +44,8 @@ express()
   .get('/cool', (req, res) => res.send(cool()))
   .get('/times', (req, res) => res.send(showTimes()))
   .get('/music', (req, res) => {
-    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 25 }, function (err, data) { res.send(data); })
+    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 25 }, function (err, data) {
+      res.render('music', { ...data.releases })
+    })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
