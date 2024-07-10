@@ -5,11 +5,14 @@ const discogs = require('disconnect').Client;
 
 const PORT = process.env.PORT || 5001
 
-// const records = discogs().setConfig({ outputFormat: 'html' });
-// const db = records.user().collection();
-// db.getReleases('b1furc4t0r', 0, { page: 0, per_page: 100 }, function (err, data) {
-//   console.log(data);
-// });
+function showTimes() {
+  const times = process.env.TIMES || 5
+  let result = ''
+  for (i = 0; i < times; i++) {
+    result += i + ' '
+  }
+  return result
+}
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -17,6 +20,7 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/cool', (req, res) => res.send(cool()))
+  .get('/times', (req, res) => res.send(showTimes()))
   .get('/music', (req, res) => {
     var col = new discogs().user().collection();
     col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 75 }, function (err, data) { res.send(data.releases[0].basic_information.artists[0]); })
