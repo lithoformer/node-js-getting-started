@@ -31,7 +31,7 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/music', { musicData }))
+  .get('/', (req, res) => res.render('pages/music', { releases: musicData.releases }))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();

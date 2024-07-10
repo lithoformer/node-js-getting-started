@@ -8,9 +8,15 @@
 </head>
 
 <body>
-    <span>
-        <%- JSON.stringify(musicData)%>
-    </span>
+    <ol>
+        <% releases.forEach(data=> { %>
+            <li>
+                Artist: <%= JSON.stringify(data.basic_information.artists[0].name) %>, Title: <%=
+                        JSON.stringify(data.basic_information.title) %>, Label: <%=
+                            JSON.stringify(data.basic_information.labels[0].name) %>
+            </li>
+            <% }); %>
+    </ol>
 </body>
 
 </html>
