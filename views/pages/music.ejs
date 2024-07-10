@@ -14,17 +14,14 @@
             <% releases.forEach(data=> { %>
                 <li>Artist: <%= JSON.stringify(data.basic_information.artists[0].name) %>, Title:
                         <%= JSON.stringify(data.basic_information.title) %>, Label: <%=
-                                JSON.stringify(data.basic_information.labels[0].name) %>, <a id="url" href="">Link: <%-
+                                JSON.stringify(data.basic_information.labels[0].name) %>, <a id="url"
+                                    href="<%=data.basic_information.resource_url%>">Link: <%=
                                         JSON.stringify(data.basic_information.resource_url) %></a>
                 </li>
                 <% }); %>
         </ol>
     </div>
-    <script>$(document).ready(function () {
-            releases.forEach(data => {
-                document.getElementById("url").setAttribute("href", datas.basic_information.resource_url);
-            })
-        });</script>
+
 </body>
 
 </html>
