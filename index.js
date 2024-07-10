@@ -19,6 +19,6 @@ express()
   .get('/cool', (req, res) => res.send(cool()))
   .get('/music', (req, res) => {
     var col = new discogs().user().collection();
-    col.releases('b1furc4t0r', 0, { page: 2, per_page: 75 }, function (err, data) { res.send(data); })
+    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 75 }, function (err, data) { res.send(data.releases[0].basic_information.artists[0]); })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
