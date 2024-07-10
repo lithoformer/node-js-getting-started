@@ -2,6 +2,7 @@ const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
 const discogs = require('disconnect').Client;
+const col = new discogs().user().collection();
 
 const { Pool } = require('pg')
 
@@ -43,7 +44,6 @@ express()
   .get('/cool', (req, res) => res.send(cool()))
   .get('/times', (req, res) => res.send(showTimes()))
   .get('/music', (req, res) => {
-    var col = new discogs().user().collection();
-    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 75 }, function (err, data) { res.send(data.releases[0].basic_information.artists[0]); })
+    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 25 }, function (err, data) { res.send(data); })
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
