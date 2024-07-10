@@ -1,8 +1,9 @@
 const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
-const discogs = require('disconnect').Client;
-const col = new discogs().user().collection();
+// const discogs = require('disconnect').Client;
+const fs = require('fs');
+// const col = new discogs().user().collection();
 
 const { Pool } = require('pg')
 
@@ -12,6 +13,8 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 })
+
+const musicData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
 const PORT = process.env.PORT || 5001
 
@@ -28,7 +31,7 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', (req, res) => res.render('pages/music', { musicData }))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
@@ -43,9 +46,10 @@ express()
   })
   .get('/cool', (req, res) => res.send(cool()))
   .get('/times', (req, res) => res.send(showTimes()))
-  .get('/music', (req, res) => {
-    col.getReleases('b1furc4t0r', 0, { page: 2, per_page: 25 }, function (err, data) {
-      res.render('music', { ...data.releases })
-    })
-  })
+  // .get('/music', (req, res) => {
+  //   col.getReleases('b1furc4t0r', 0, { page: 0, per_page: 1000 }, function (err, data) {
+  //     res.render('pages/music', { data })
+  //     // console.log(data.releases[0]);
+  //   })
+  // })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
