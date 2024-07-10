@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5001
 
 const records = discogs().setConfig({ outputFormat: 'html' });
 const db = records.user().collection();
-const data = db.getReleases('b1furc4t0r', 0, { page: 0, per_page: 100 }, function (err, data) {
+const userdata = db.getReleases('b1furc4t0r', 0, { page: 0, per_page: 100 }, function (err, data) {
   return data;
 });
 
@@ -17,5 +17,5 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/cool', (req, res) => res.send(cool()))
-  .get('/music', (req, res) => res.send(data.releases[0].basic_information.artists[0]))
+  .get('/music', (req, res) => res.send(userdata.releases[0].basic_information.artists[0]))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
