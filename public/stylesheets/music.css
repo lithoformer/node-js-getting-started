@@ -2,3 +2,11 @@
 #test {
     font-family: Open Sans, sans-serif;
 }
+
+#links:hover {
+    color: blue
+}
+
+body {
+    background-color: beige;
+}
