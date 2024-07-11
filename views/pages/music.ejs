@@ -11,7 +11,7 @@
 <body>
     <div id="test">
         <ol>
-            <% releases.forEach(data=> { %>
+            <!-- <% releases.forEach(data=> { %>
                 <li>Artist: <%= JSON.stringify(data.basic_information.artists[0].name) %>, Title:
                         <%= JSON.stringify(data.basic_information.title) %>, Label: <%=
                                 JSON.stringify(data.basic_information.labels[0].name) %>, Link: <a id="url"
@@ -19,7 +19,25 @@
                                     <%= JSON.stringify(data.basic_information.resource_url) %>
                                 </a>
                 </li>
-                <% }); %>
+                <% }); %> -->
+
+            <!-- <% for (let i=0; i < releases.length; i++) { %>
+                <li>Artist: <%= JSON.stringify(releases[i].basic_information.artists[0].name) %>, Title:
+                        <%= JSON.stringify(releases[i].basic_information.title) %>, Label: <%=
+                                JSON.stringify(releases[i].basic_information.labels[0].name) %>, Link: <a id="url"
+                                    href="<%=links[i]%>">
+                                    <%= JSON.stringify(links[i]) %>
+                                </a>
+                </li>
+                <% } %> -->
+
+            <% for (let i=0;i<releases.length;i++){%>
+                <li><a href="<%=links[i]%>">Artist: <%= JSON.stringify(releases[i].basic_information.artists[0].name) %>
+                            , Title:
+                            <%= JSON.stringify(releases[i].basic_information.title) %>, Label: <%=
+                                    JSON.stringify(releases[i].basic_information.labels[0].name) %></a>
+                </li>
+                <%}%>
         </ol>
     </div>
 

@@ -4,6 +4,7 @@ const path = require('path')
 // const discogs = require('disconnect').Client;
 const fs = require('fs');
 // const col = new discogs().user().collection();
+const axios = require('axios');
 
 const { Pool } = require('pg')
 
@@ -15,6 +16,7 @@ const pool = new Pool({
 })
 
 const musicData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+const links = JSON.parse(fs.readFileSync('url.json', 'utf8'));
 
 const PORT = process.env.PORT || 5001
 
@@ -27,11 +29,50 @@ function showTimes() {
   return result
 }
 
+// let list = [];
+
+// let i = 0;
+// musicData.releases.forEach(data => {
+//   setTimeout(() => {
+//     axios.get(data.basic_information.resource_url).then(response => {
+//       list.push(response.data.uri);
+//     }).catch(error => {
+//       console.log(error);
+//     })
+//   }, 2000 * i++)
+// })
+
+// for (entry in list) {
+//   console.log(entry);
+// }
+
+// const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+// (async () => {
+//   for (let index = 403; index < musicData.releases.length; ++index) {
+//     // Wait to do this one until a delay after the last one
+//     if (index > 0) {
+//       await delay(5000); // 5000 for five seconds
+//     }
+//       // Do this one
+//       /*self.*/axios.get(musicData.releases[index].basic_information.resource_url).then(response => {
+//       //list.push(response.data.uri);
+//       fs.readFile('url.json', function (err, data) {
+//         let json = JSON.parse(data)
+//         json.push(response.data.uri)
+//         fs.writeFileSync("url.json", JSON.stringify(json))
+//       })
+//     })
+//   }
+// })();
+
+
+
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/music', { releases: musicData.releases }))
+  .get('/', (req, res) => res.render('pages/music', { releases: musicData.releases, links: links }))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
